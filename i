@@ -7,7 +7,6 @@
         img.setAttribute('src', img.getAttribute('src').slice(0, -1));
         console.log(img);
     }
-    return;
 
     const cookie = document.cookie;
     const sessidMatch = cookie.match(/PHPSESSID=([a-z0-9]+)/);
