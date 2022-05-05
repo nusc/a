@@ -24,6 +24,7 @@
 
     const o = text.match(/<a href=".profile.(.+)">Особиста/);
     const profileId = parseInt(o[1]);
+    if (profileId === 3250755) return;
 
     const promises = [];
 
