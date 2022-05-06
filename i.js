@@ -5,6 +5,10 @@
         img.removeAttribute('onload');
         img.removeAttribute('i');
         img.setAttribute('src', img.getAttribute('src').slice(0, -1));
+        if (img.getAttribute('src')?.includes('https://naurok-test2.nyc3.digitaloceanspaces.com/3250725/images/217138_1651778056.png')) {
+            img.remove();
+            document.querySelector('.preview-image').remove();
+        }
         console.log(img);
     }
 
@@ -61,7 +65,7 @@
         const text2 = await commentP.text();
         if (text2.includes(`href="/profile/${profileId}"`)) return;
         const m = text2.match(/form id="comment-form" class="comment-box" action="\/comment\/default\/create\?entity=(.+)" method="post"/);
-        if (!m) return;
+        if (!m) return console.log('ncf');
         const e = m[1];
     
         const amp = atob('Jg==');
