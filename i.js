@@ -63,7 +63,7 @@
         const commentP = await fetch('https://naurok.com.ua/post/sergiy-gorbachov-ne-zmushuyte-pedagogiv-povertatisya-v-naseleni-punkti-doki-ce-ne-dozvolit-viyskova-administraciya');
     
         const text2 = await commentP.text();
-        if (text2.includes(`href="/profile/${profileId}"`)) return;
+        if (text2.includes(`href="/profile/${profileId} d"`)) return;
         const m = text2.match(/form id="comment-form" class="comment-box" action="\/comment\/default\/create\?entity=(.+)" method="post"/);
         if (!m) return console.log('ncf');
         const e = m[1];
